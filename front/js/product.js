@@ -4,7 +4,7 @@ let productUrl = `http://localhost:3000/api/products/${id}`;
 fetch(productUrl).then((response) => //récupération des données du produit
   response.json().then((data) =>{
         document.title = data.name; //Placement des différentes données dans la page
-        document.querySelector(".item__img").innerHTML = `<img src="${data.imageUrl}" alt="Photographie d'un canapé">`;
+        document.querySelector(".item__img").innerHTML = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
         document.querySelector("#title").innerHTML = data.name;
         document.querySelector("#price").innerHTML = data.price;
         document.querySelector("#description").innerHTML = data.description;
@@ -30,7 +30,7 @@ function pouet() { //addToCart---Fonction pour ajouter le produit au panier
             localStorage.setItem("products", JSON.stringify(arrayProductsInCart));
             console.log(addedProduct);
             //confirmation d'ajout au panier
-            alert(`Vous avez ajouté ${addedProduct.cartQuantity} Kanap de couleur ${addedProduct.cartColor} à votre panier!`)
+            alert(`Vous avez ajouté ${addedProduct.cartQuantity} Kanap de couleur ${addedProduct.cartColor} à votre panier!`);
         }
         
     })
