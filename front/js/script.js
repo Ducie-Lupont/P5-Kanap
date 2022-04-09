@@ -2,11 +2,11 @@ let apiUrl="http://localhost:3000/api/products";//définir l'url de l'api
 fetch(apiUrl).then((response) =>
   response.json().then((data) =>{
     const items = document.querySelector("#items");
-    //création des objets html
+    //création et insertion des objets html
     for (let products of data){
-      let productLink = document.createElement("a");
-      productLink.href = `./product.html?id=${products._id}`;
-      items.append(productLink);
+      let productLink = document.createElement("a");              //création de l'élément hmtl
+      productLink.href = `./product.html?id=${products._id}`;     //définition de son contenu
+      items.append(productLink);                                  //Placement dans la page
       let productArticle = document.createElement("article");
       productLink.append(productArticle);
       let productImgUrl = document.createElement("img");
