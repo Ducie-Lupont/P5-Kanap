@@ -1,5 +1,4 @@
 let arrayProductsInCart = JSON.parse(localStorage.getItem("products"))
-console.log(arrayProductsInCart)
 const cartItems = document.querySelector("#cart__items")
 
 //si arrayProductsInCart existe, alors je récupère l'intégralité des données sur ce produit à partir de l'api
@@ -10,6 +9,8 @@ if (arrayProductsInCart) {
             response.json().then((data) => {
                 displayCart(cartContent, data)
                 totalArticles(arrayProductsInCart)
+                const button = document.querySelector("#order")
+                button.onclick = order
             }))
     }
 }
@@ -129,4 +130,84 @@ function totalArticles(cart) {
         priceDiv.textContent = totalPrice
         quantityDiv.textContent = totalQuantity
     }
+}
+
+function order(event) {
+    event.preventDefault() //empêcher le comportement par défaut(recharger la page ou rediriger) du bouton
+    const pouetRegex = /^[A-zÀ-ú' -]+$/
+    const addressRegex = /^([0-9]{1,}) ?([A-zÀ-ú,' .-]+$)/
+    const emailRegex = /^[A-z0-9-_.]{1,}[@][A-z-]{2,}[.][A-z]{2,}$/g
+    const firstNameInput = document.querySelector("#firstName").value
+    const lastNameInput = document.querySelector("#lastName").value
+    const addressInput = document.querySelector("#address").value
+    const cityInput = document.querySelector("#city").value
+    const emailInput = document.querySelector("#email").value
+    const firstNameError = document.querySelector("#firstNameErrorMsg")
+    const lastNameError = document.querySelector("#lastNameErrorMsg")
+    const addressError = document.querySelector("#addressErrorMsg")
+    const cityError = document.querySelector("#cityErrorMsg")
+    const emailError = document.querySelector("#emailErrorMsg")
+    let checkingInputs = true
+    if (firstNameInput.match(pouetRegex)) {     //si il y a match
+        firstNameError.textContent = ""         //Je vide le champ d'erreur
+    }
+    else {
+        checkingInputs = false                  //Sinon, je signale l'erreur
+        firstNameError.textContent = "Le champ n'est pas rempli correctement" //et je le signale a l'utilisateur
+    }
+    if (lastNameInput.match(pouetRegex)) {
+        lastNameError.textContent = ""
+    }
+    else {
+        checkingInputs = false
+        lastNameError.textContent = "Le champ n'est pas rempli correctement"
+    }
+    if (addressInput.match(addressRegex)) {
+        addressError.textContent = ""
+    }
+    else {
+        checkingInputs = false
+        addressError.textContent = "Le champ n'est pas rempli correctement"
+    }
+    if (cityInput.match(pouetRegex)) {
+        cityError.textContent = ""
+    }
+    else {
+        checkingInputs = false
+        cityError.textContent = "Le champ n'est pas rempli correctement"
+    }
+    if (emailInput.match(emailRegex)) {
+        emailError.textContent = ""
+    }
+    else {
+        checkingInputs = false
+        emailError.textContent = "Le champ n'est pas rempli correctement"
+    }
+    if (checkingInputs == false) {
+        return
+    }
+    let contact = {                     //créer l'objet contact
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+        address: addressInput,
+        city: cityInput,
+        email: emailInput
+    }
+    let products = []
+    let arrayProductsInCart = JSON.parse(localStorage.getItem("products"))
+    for (let product of arrayProductsInCart) {
+        products.push(product.cartId)
+    }
+    fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ products, contact })
+    }).then((response) =>
+        response.json().then((data) => {
+            localStorage.clear()
+            location.href = `./confirmation.html?order=${data.orderId}`
+        }))
 }

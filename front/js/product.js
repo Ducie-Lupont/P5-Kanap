@@ -44,8 +44,6 @@ function addToCart() {
                 arrayProductsInCart.push(addedProduct);//Si le localStorage n'existe pas, on le crée contenant le produit ajouté.
             }
             localStorage.setItem("products", JSON.stringify(arrayProductsInCart));
-            console.log(addedProduct);
-            console.log(arrayProductsInCart);
             //confirmation d'ajout au panier
             alert(`Vous avez ajouté ${addedProduct.cartQuantity} Kanap de couleur ${addedProduct.cartColor} à votre panier!`);
         }
