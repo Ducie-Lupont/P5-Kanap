@@ -2,6 +2,7 @@ let arrayProductsInCart = JSON.parse(localStorage.getItem("products"))
 console.log(arrayProductsInCart)
 const cartItems = document.querySelector("#cart__items")
 
+//si arrayProductsInCart existe, alors je récupère l'intégralité des données sur ce produit à partir de l'api
 
 if (arrayProductsInCart) {
     for (let cartContent of arrayProductsInCart) {
@@ -13,8 +14,10 @@ if (arrayProductsInCart) {
     }
 }
 
+//Implémentation des différents éléments html dans la page
+
 function displayCart(cartContent, data) {
-    let cartItem = document.createElement("article");
+    let cartItem = document.createElement("article"); //création des variables contenant mes éléments html
     let cartItemDivImg = document.createElement("div");
     let cartItemImg = document.createElement("img");
     let cartItemDivContent = document.createElement("div");
@@ -28,7 +31,7 @@ function displayCart(cartContent, data) {
     let contentSettingsQuantityInput = document.createElement("input");
     let contentSettingsDelete = document.createElement("div");
     let contentSettingsDeleteItem = document.createElement("p");
-    cartItem.className = "cart__item";
+    cartItem.className = "cart__item"; //création du contenu des éléments html
     cartItem.dataset.id = cartContent.cartId;
     cartItem.dataset.color = cartContent.cartColor;
     cartItemDivImg.className = "cart__item__img";
@@ -53,7 +56,7 @@ function displayCart(cartContent, data) {
     contentSettingsDeleteItem.className = "deleteItem";
     contentSettingsDeleteItem.textContent = "Supprimer";
     contentSettingsDeleteItem.onclick = deletingItem;
-    cartItems.append(cartItem);
+    cartItems.append(cartItem); //placement des éléments dans le html
     cartItem.append(cartItemDivImg);
     cartItemDivImg.append(cartItemImg);
     cartItem.append(cartItemDivContent);
@@ -69,10 +72,12 @@ function displayCart(cartContent, data) {
     contentSettingsDelete.append(contentSettingsDeleteItem);
 }
 
+//Fonction pour supprimer un élément du panier
+
 function deletingItem(event) {
     let arrayProductsInCart = JSON.parse(localStorage.getItem("products"))
     const productToDelete = event.target
-    const closestArticle = productToDelete.closest("article");//récupérer l'arcle à supprimer
+    const closestArticle = productToDelete.closest("article");
     const articleId = closestArticle.dataset.id;
     const articleColor = closestArticle.dataset.color;
     if (confirm("Voulez-vous vraiment supprimer cet article de votre panier?")) {
@@ -84,10 +89,12 @@ function deletingItem(event) {
     }
 }
 
+//Fonction pour modifier la quantité d'un élément
+
 function changeQuantity(event) {
     let arrayProductsInCart = JSON.parse(localStorage.getItem("products"))
     const productQuantity = parseInt(event.target.value)
-    const closestArticle = event.target.closest("article")//récupérer l'arcle à supprimer
+    const closestArticle = event.target.closest("article")
     const articleId = closestArticle.dataset.id
     const articleColor = closestArticle.dataset.color
 
@@ -99,6 +106,8 @@ function changeQuantity(event) {
         totalArticles(arrayProductsInCart)
     }
 }
+
+//calcul des totaux prix/quantité dans le panier
 
 function totalArticles(cart) {
     let totalPrice = 0
