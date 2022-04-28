@@ -18,7 +18,7 @@ if (arrayProductsInCart) {
 //Implémentation des différents éléments html dans la page
 
 function displayCart(cartContent, data) {
-    let cartItem = document.createElement("article"); //création des variables contenant mes éléments html
+    let cartItem = document.createElement("article");                                       //création des variables contenant mes éléments html
     let cartItemDivImg = document.createElement("div");
     let cartItemImg = document.createElement("img");
     let cartItemDivContent = document.createElement("div");
@@ -32,7 +32,7 @@ function displayCart(cartContent, data) {
     let contentSettingsQuantityInput = document.createElement("input");
     let contentSettingsDelete = document.createElement("div");
     let contentSettingsDeleteItem = document.createElement("p");
-    cartItem.className = "cart__item"; //création du contenu des éléments html
+    cartItem.className = "cart__item";                                                      //création du contenu des éléments html
     cartItem.dataset.id = cartContent.cartId;
     cartItem.dataset.color = cartContent.cartColor;
     cartItemDivImg.className = "cart__item__img";
@@ -57,7 +57,7 @@ function displayCart(cartContent, data) {
     contentSettingsDeleteItem.className = "deleteItem";
     contentSettingsDeleteItem.textContent = "Supprimer";
     contentSettingsDeleteItem.onclick = deletingItem;
-    cartItems.append(cartItem); //placement des éléments dans le html
+    cartItems.append(cartItem);                                                             //placement des éléments dans le html
     cartItem.append(cartItemDivImg);
     cartItemDivImg.append(cartItemImg);
     cartItem.append(cartItemDivContent);
@@ -184,7 +184,7 @@ function order(event) {
         emailError.textContent = "Le champ n'est pas rempli correctement"
     }
     if (checkingInputs == false) {
-        return
+        return false
     }
     let contact = {                     //créer l'objet contact
         firstName: firstNameInput,

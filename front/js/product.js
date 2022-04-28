@@ -26,8 +26,8 @@ fetch(productUrl).then((response) =>
 function addToCart() {
     let itemQuantity = document.querySelector("#quantity");
     document.querySelector("#addToCart").addEventListener("click", () => {
-        if (itemQuantity.value > 0 && itemQuantity.value < 101 && document.querySelector("#colors").value !== "") {
-            var addedProduct = {
+        if (itemQuantity.value > 0 && itemQuantity.value < 101 && document.querySelector("#colors").value !== "") { // Si la quantité ajoutée est entre 1 et 100 inclus,...
+            var addedProduct = {                                                                                    // ...,Je crée le produit à ajouter au panier, contenant l'id du produit, la couleur choisie et la quantité à ajouter.
                 cartId: id,
                 cartColor: document.querySelector("#colors").value,
                 cartQuantity: parseInt(document.querySelector("#quantity").value),
@@ -41,7 +41,7 @@ function addToCart() {
                 findProduct.cartQuantity += addedProduct.cartQuantity;      //
             }
             else {
-                arrayProductsInCart.push(addedProduct);//Si le localStorage n'existe pas, on le crée contenant le produit ajouté.
+                arrayProductsInCart.push(addedProduct);//Si le localStorage ou le produit à ajouter n'existe pas, on le crée contenant le produit ajouté.
             }
             localStorage.setItem("products", JSON.stringify(arrayProductsInCart));
             //confirmation d'ajout au panier
